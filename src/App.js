@@ -1,5 +1,4 @@
-import './categories.styles.scss';
-import CategoryItem from './components/category-item/category-item.component';
+import Directory from './components/directory/directory.component';
 
 const App = () => {
 
@@ -12,7 +11,7 @@ const App = () => {
     {
       id: 2,
       title: 'Drinks',
-      imageUrl: 'https://i.ibb.co/Wks6NcX/drinks.jpg',
+      imageUrl: 'https://i.ibb.co/SRKjJ7P/drinks.jpg',
     },
     {
       id: 3,
@@ -33,13 +32,8 @@ const App = () => {
 
   return (
     /* There are five different category container with each different category at the home page */
-    /* Iterating over the categories array to optimize the code (efficient adding of new categories) */
+    <Directory categories={categories} />
 
-    <div className="categories-container">
-      {categories.map((category) => (
-        <CategoryItem key={category.id} category={category} />
-      ))}
-    </div>
   );
 }
 
