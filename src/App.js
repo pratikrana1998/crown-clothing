@@ -1,40 +1,14 @@
-import Directory from './components/directory/directory.component';
+import Home from "./routes/home/home.component";
+import { Routes, Route } from "react-router";
 
 const App = () => {
-
-  const categories = [
-    {
-      id: 1,
-      title: 'Tiered Cakes',
-      imageUrl: 'https://i.ibb.co/L1GVDPW/tieredcake.jpg',
-    },
-    {
-      id: 2,
-      title: 'Drinks',
-      imageUrl: 'https://i.ibb.co/SRKjJ7P/drinks.jpg',
-    },
-    {
-      id: 3,
-      title: 'Apparel',
-      imageUrl: 'https://i.ibb.co/ZByJk1W/apparel.jpg',
-    },
-    {
-      id: 4,
-      title: 'Pastry',
-      imageUrl: 'https://i.ibb.co/5vwGYtX/pastry.jpg',
-    },
-    {
-      id: 5,
-      title: 'Cakes',
-      imageUrl: 'https://i.ibb.co/wLd79bP/cake.jpg',
-    },
-  ]
-
-  return (
-    /* There are five different category container with each different category at the home page */
-    <Directory categories={categories} />
-
-  );
+  return(
+    /* Routes allows this application to register these Route level components that will then in turn render a specific component when it matches 
+       the specific route that you're looking for */ 
+    <Routes>
+      <Route path='/' element={ <Home /> } />
+    </Routes>
+  )
 }
 
 export default App;
