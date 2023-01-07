@@ -4,6 +4,13 @@ import { initializeApp } from 'firebase/app';
 /* For authentication */
 import { getAuth, signInWithRedirect, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 
+import {
+    getFirestore,
+    doc,
+    getDoc,
+    setDoc,
+} from 'firebase/firestore';
+
 const firebaseConfig = {
     apiKey: "AIzaSyBBPv5r3dxGVv6Gz_oLVKTOvXUMlYsx5fw",
     authDomain: "crwn-pasty-db.firebaseapp.com",
@@ -24,4 +31,35 @@ provider.setCustomParameters({
 });
 
 export const auth = getAuth();
-export const signInWithGooglePopup = () => signInWithGooglePopup(auth, provider);
+export const signInWithGooglePopup = () => signInWithPopup(auth, provider);
+
+export const db = getFirestore();
+
+export const createUserDocumentFromAuth = async (userAuth) => {
+    const userDocRef = doc(db, 'users', userAuth.uid);
+    console.log(userDocRef);
+
+    const userSnapshot = await getDoc(userDocRef);
+    console.log(userSnapshot);
+    console.log(userSnapshot.exists());
+
+    /* if user data doesnot exist
+        create / set the document with the data from userAuth in my collection */
+    if(!userSnapshot.exists()) {
+        const { displayName, email } = userAuth;
+        const createdAt = new Date();
+
+        try {
+            await setDoc(userDocRef, {
+                displayName,
+                email,
+                createdAt
+            });
+        } catch(error) {
+            console.log('error creating the user: ', error.message);
+        }
+    };
+
+    //if user data exists
+    return userDocRef;
+};
