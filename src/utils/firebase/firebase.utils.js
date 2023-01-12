@@ -2,7 +2,7 @@
 import { initializeApp } from 'firebase/app';
 
 /* For authentication */
-import { getAuth, signInWithRedirect, signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+import { getAuth, signInWithRedirect, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword } from 'firebase/auth';
 
 import {
     getFirestore,
@@ -36,7 +36,8 @@ export const signInWithGoogleRedirect = () => signInWithRedirect(auth, provider)
 
 export const db = getFirestore();
 
-export const createUserDocumentFromAuth = async (userAuth) => {
+/* By creating each functionality as a seperate function we protect Frontend app from this external service that's subject to change */
+export const createUserDocumentFromAuth = async (userAuth, additionalInformation = {}) => {
     const userDocRef = doc(db, 'users', userAuth.uid);
     console.log(userDocRef);
 
@@ -54,7 +55,8 @@ export const createUserDocumentFromAuth = async (userAuth) => {
             await setDoc(userDocRef, {
                 displayName,
                 email,
-                createdAt
+                createdAt,
+                ...additionalInformation,
             });
         } catch(error) {
             console.log('error creating the user: ', error.message);
@@ -64,3 +66,9 @@ export const createUserDocumentFromAuth = async (userAuth) => {
     //if user data exists
     return userDocRef;
 };
+
+export const createAuthUserWithEmailAndPassword = async (email, password) => {
+    if(!email || !password)
+        return;
+    return await createUserWithEmailAndPassword(auth, email, password);
+}
