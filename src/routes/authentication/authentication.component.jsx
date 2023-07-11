@@ -6,7 +6,7 @@ import { signInWithGooglePopup, createUserDocumentFromAuth } from "../../utils/f
 import SignUpForm from "../../components/sign-up-form/sign-up-form.component";
 import SignInForm from "../../components/sign-in-form/sign-in-form.component";
 
-import './authentication.styles.scss';
+import { AuthenticationContainer } from './authentication.styles';
 
 const Authentication = () => {
 
@@ -25,13 +25,13 @@ const Authentication = () => {
     return (
         /*  For the sign In with Google Redirect:
             Once we go to a different domain and comeback, our app reloads everything as new and previous state is not stored anywhere, hence we don't get any response back */
-        <div className="authentication-container">
+        <AuthenticationContainer>
             <SignInForm />
             <SignUpForm />
             {/* <button onClick={signInWithGoogleRedirect}>
                  Sign In with Google Redirect
             </button> */}
-        </div>
+        </AuthenticationContainer>
     );
 };
 

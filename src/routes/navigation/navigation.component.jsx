@@ -1,5 +1,5 @@
 import { Fragment, useContext } from "react";
-import { Outlet, Link } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
 import CartIcon from "../../components/cart-icon/cart-icon.component";
 import CartDropdown from "../../components/cart-dropdown/cart-dropdown.component";
@@ -11,7 +11,7 @@ import { signOutUser } from "../../utils/firebase/firebase.utils";
 
 import { ReactComponent as CrwnLogo } from "../../assets/crown.svg";
 
-import './navigation.styles.scss';
+import { NavigationContainer, LogoContainer, NavLinks, NavLink } from './navigation.styles.jsx';
 
 const Navigation = () => {
 
@@ -20,27 +20,27 @@ const Navigation = () => {
 
     return (
       <Fragment>
-        <div className="navigation">
-            <Link className="logo-container" to={'/'}>
+        <NavigationContainer>
+            <LogoContainer to={'/'}>
                 <CrwnLogo className="logo" />
-            </Link>
-            <div className="nav-links-container">
-            <Link className="nav-link" to={'/shop'}>
+            </LogoContainer>
+            <NavLinks>
+            <NavLink to={'/shop'}>
                 SHOP
-            </Link>
+            </NavLink>
             { /* Based on whether a user is available we render sign out or sign in component */
               currentUser ? (
-                <span className="nav-link" onClick={signOutUser}> {' '}SIGN OUT{' '} </span>
+                <NavLink as='span' onClick={signOutUser}> {' '}SIGN OUT{' '} </NavLink>
               ) : (
-                <Link className="nav-link" to={'/auth'}>
+                <NavLink to={'/auth'}>
                 SIGN IN
-                </Link>
+                </NavLink>
             )}
             <CartIcon />
-            </div>
+            </NavLinks>
             {/* Both the expression should evaluate to True value for cart dropdown menu to appear, Components are True values. */}
             {isCartOpen && <CartDropdown />}
-        </div>
+        </NavigationContainer>
         <Outlet />
       </Fragment>
     )

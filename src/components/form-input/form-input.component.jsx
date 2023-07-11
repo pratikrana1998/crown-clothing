@@ -1,17 +1,17 @@
-import './form-input.styles.scss';
+import { Group, FormInputLabel, Input } from './form-input.styles.jsx';
 
 const FormInput = ({ label, ...otherProps }) => {
     return (
         /* We are essentially grouping the form together so class is group 
             As long as the length of value is > 0 then I want to append the shrink class */
-        <div className="group">
-            <input className="form-input" {...otherProps} />
+        <Group>
+            <Input {...otherProps} />
             {   /* If label exists then render it */
                 label && (
-            <label className={`${otherProps.value.length ? 'shrink' : ''} form-input-label`}>{ label }</label>
+            <FormInputLabel shrink={otherProps.value.length}>{ label }</FormInputLabel>
             )}
         
-        </div>
+        </Group>
     )
 }
 
